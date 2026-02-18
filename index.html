@@ -326,29 +326,32 @@ async function syncData() {
   const url = localStorage.getItem('mf_api_url');
   if (!url) { showSetup(); return; }
 
-  document.getElementById('loader-msg').textContent = 'Syncing from Google Sheets…';
+  document.getElementById('loader-msg').textContent = 'Syncing from Google Sheets...';
   document.getElementById('loader').classList.remove('hide');
-  document.getElementById('loader').style.opacity  = '1';
-  document.getElementById('loader').style.pointerEvents = 'all';
 
   try {
-    // Apps Script URL works directly — no proxy needed!
-    const res  = await fetch(url, { signal: AbortSignal.timeout(15000) });
+    // Add redirect: 'follow' to handle Google's 302 redirect
+    const res = await fetch(url, { 
+      method: 'GET',
+      redirect: 'follow' 
+    });
+    
     const data = await res.json();
 
-    if (data.error) throw new Error(data.error);
-    if (!data.funds || data.funds.length === 0) throw new Error('No fund data returned');
-
-    // Attach display meta to each fund
+    if (data.status === 'error') throw new Error(data.error);
+    
+    // Attach display meta
     FUNDS = data.funds.map(f => ({ ...f, ...matchMeta(f.name) }));
 
     document.getElementById('sync-time').textContent = new Date().toLocaleTimeString('en-IN');
     render();
-    fetchNAVs();
+    fetchNAVs(); // Automatically fetch Live NAVs after sync
 
   } catch(e) {
+    console.error(e);
     document.getElementById('loader').classList.add('hide');
-    setStatus('err', '⚠ Could not sync: ' + e.message + ' · Check your Apps Script URL or re-deploy.');
+    setStatus('err', '⚠ Sync Failed: ' + e.message);
+    // If it fails, let the user re-check the URL
     showSetup();
   }
 }
