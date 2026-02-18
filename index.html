@@ -16,14 +16,16 @@
     background:radial-gradient(circle,rgba(61,139,255,0.05) 0%,transparent 70%);pointer-events:none;z-index:0}
   .wrap{max-width:960px;margin:0 auto;padding:32px 18px;position:relative;z-index:1}
 
+  /* Loader */
   #loader{position:fixed;inset:0;background:var(--bg);z-index:999;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity 0.5s}
   #loader.hide{opacity:0;pointer-events:none}
   .spinner{width:44px;height:44px;border:3px solid var(--border);border-top-color:var(--accent);
     border-radius:50%;animation:spin 0.8s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
-  #loader p{font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--muted)}
+  #loader p{font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--muted);text-align:center;padding:0 20px}
 
+  /* Header */
   .hdr{margin-bottom:28px}
   .hdr-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
   .hdr h1{font-family:'DM Serif Display',serif;font-size:2rem;line-height:1.15}
@@ -40,30 +42,30 @@
   .sync-btn:hover{background:rgba(245,200,66,0.16)}
   .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.25}}
+
   .goal-bar{margin-top:14px;background:var(--surface);border:1px solid var(--border);
     border-radius:12px;padding:14px 20px;display:flex;gap:24px;flex-wrap:wrap;align-items:center}
   .gi .gl{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em}
   .gi .gv{font-family:'DM Mono',monospace;font-size:0.92rem;margin-top:3px}
   .col-gold{color:var(--gold)}.col-blue{color:var(--accent2)}.col-green{color:var(--accent)}.col-muted{color:var(--muted)}
 
-  /* Setup */
-  #setup{background:var(--surface);border:1px solid rgba(245,200,66,0.3);border-radius:14px;
-    padding:24px;margin-bottom:24px;display:none}
-  #setup h3{font-family:'DM Serif Display',serif;color:var(--gold);margin-bottom:6px}
-  #setup p{font-size:0.8rem;color:var(--muted);margin-bottom:18px;line-height:1.6}
+  /* Setup Panel */
+  #setup{background:var(--surface);border:1px solid rgba(245,200,66,0.3);
+    border-radius:14px;padding:24px;margin-bottom:24px;display:none}
+  #setup h3{font-family:'DM Serif Display',serif;color:var(--gold);margin-bottom:8px}
+  #setup p{font-size:0.8rem;color:var(--muted);margin-bottom:20px;line-height:1.7}
   .input-row{display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
   .input-row label{font-size:0.78rem;color:var(--muted);min-width:130px}
-  .input-row input{flex:1;min-width:240px;background:var(--surface2);border:1px solid var(--border);
-    color:var(--text);padding:10px 12px;border-radius:8px;font-family:'DM Mono',monospace;font-size:0.78rem;outline:none}
+  .input-row input{flex:1;min-width:260px;background:var(--surface2);border:1px solid var(--border);
+    color:var(--text);padding:10px 12px;border-radius:8px;font-family:'DM Mono',monospace;
+    font-size:0.78rem;outline:none}
   .input-row input:focus{border-color:var(--accent2)}
   .connect-btn{background:var(--accent2);border:none;color:#fff;font-family:'DM Sans',sans-serif;
     font-weight:600;font-size:0.85rem;padding:10px 22px;border-radius:9px;cursor:pointer;
-    margin-top:6px;transition:opacity 0.2s}
+    margin-top:8px;transition:opacity 0.2s}
   .connect-btn:hover{opacity:0.85}
-  .hint{font-size:0.72rem;color:var(--muted);line-height:1.6;margin-top:-4px;margin-bottom:14px}
-  .hint code{background:var(--surface2);padding:1px 5px;border-radius:4px;
-    font-family:'DM Mono',monospace;color:var(--accent2);font-size:0.71rem}
 
+  /* KPI Cards */
   .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-bottom:28px}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 16px;
     transition:border-color 0.2s,transform 0.2s;animation:fadeUp 0.5s ease both}
@@ -76,10 +78,12 @@
   .card .cs{font-size:0.73rem;color:var(--muted);margin-top:3px}
   .g{color:var(--accent)}.r{color:var(--warn)}.b{color:var(--accent2)}.go{color:var(--gold)}
 
+  /* Section */
   .sec{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);
     margin-bottom:12px;display:flex;align-items:center;gap:10px}
   .sec::after{content:'';flex:1;height:1px;background:var(--border)}
 
+  /* Fund cards */
   .fund{background:var(--surface);border:1px solid var(--border);border-radius:14px;
     padding:20px;margin-bottom:12px;transition:border-color 0.2s,transform 0.2s;animation:fadeUp 0.5s ease both}
   .fund:hover{border-color:rgba(61,139,255,0.28);transform:translateY(-1px)}
@@ -101,17 +105,14 @@
   .fnums{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}
   .ni .nl{font-size:0.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
   .ni .nv{font-family:'DM Mono',monospace;font-size:0.9rem;margin-top:3px}
-
   .folio-list{margin-top:12px;padding-top:12px;border-top:1px dashed var(--border)}
   .folio-title{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px}
-  .folio-row{display:flex;gap:16px;flex-wrap:wrap;padding:7px 10px;border-radius:8px;
-    background:var(--surface2);margin-bottom:5px}
-  .fi{font-size:0.72rem;color:var(--muted)}
-  .fi span{font-family:'DM Mono',monospace;color:var(--text);margin-left:4px}
-
+  .folio-row{display:flex;gap:16px;flex-wrap:wrap;padding:7px 10px;border-radius:8px;background:var(--surface2);margin-bottom:5px}
+  .fi{font-size:0.72rem;color:var(--muted)}.fi span{font-family:'DM Mono',monospace;color:var(--text);margin-left:4px}
   .bar-track{background:var(--surface2);border-radius:999px;height:4px;margin-top:14px;overflow:hidden}
   .bar-fill{height:100%;border-radius:999px}
 
+  /* Status */
   .status{text-align:center;font-family:'DM Mono',monospace;font-size:0.72rem;
     color:var(--muted);margin:-4px 0 20px;padding:10px}
   .status.ok{color:var(--accent)}.status.err{color:var(--warn)}.status.info{color:var(--accent2)}
@@ -120,6 +121,7 @@
     font-size:0.75rem;padding:9px 20px;border-radius:9px;cursor:pointer;transition:background 0.2s}
   .refresh-btn:hover{background:rgba(0,229,160,0.18)}
 
+  /* Projection */
   .proj-box{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:28px}
   .proj-box h3{font-family:'DM Serif Display',serif;font-size:1.1rem;margin-bottom:18px}
   .slider-row{display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap}
@@ -140,16 +142,18 @@
   .prog-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 0.5s ease}
   .prog-pct{text-align:center;font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--accent2);margin-top:5px}
 
+  /* Guide */
   .guide-box{background:var(--surface);border:1px solid rgba(245,200,66,0.25);border-radius:14px;padding:22px;margin-bottom:28px}
   .guide-box h3{font-family:'DM Serif Display',serif;font-size:1rem;color:var(--gold);margin-bottom:14px}
-  .step{display:flex;gap:14px;margin-bottom:12px;align-items:flex-start}
-  .step .num{width:26px;height:26px;border-radius:50%;flex-shrink:0;background:rgba(245,200,66,0.12);
+  .step{display:flex;gap:14px;margin-bottom:14px;align-items:flex-start}
+  .step .num{width:28px;height:28px;border-radius:50%;flex-shrink:0;background:rgba(245,200,66,0.12);
     border:1px solid rgba(245,200,66,0.3);color:var(--gold);font-family:'DM Mono',monospace;
     font-size:0.75rem;display:flex;align-items:center;justify-content:center;font-weight:500}
-  .step .txt{font-size:0.82rem;color:var(--text);line-height:1.6}
+  .step .txt{font-size:0.82rem;color:var(--text);line-height:1.7}
   .step .txt code{background:var(--surface2);border:1px solid var(--border);padding:1px 6px;
     border-radius:4px;font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--accent2)}
   .step .txt a{color:var(--accent2)}
+  .step .txt strong{color:var(--text)}
 
   .api-note{background:var(--surface2);border:1px solid var(--border);border-radius:10px;
     padding:14px 18px;font-size:0.73rem;color:var(--muted);text-align:center;margin-bottom:24px}
@@ -162,7 +166,7 @@
 
 <div id="loader">
   <div class="spinner"></div>
-  <p id="loader-msg">Syncing from Google Sheets…</p>
+  <p id="loader-msg">Loading your portfolio…</p>
 </div>
 
 <div class="wrap">
@@ -174,55 +178,49 @@
         <p>Furniture &amp; Interior Goal · December 2027 · Powered by Google Sheets + mfapi.in</p>
       </div>
       <div class="btn-row">
-        <button class="sync-btn" onclick="reloadSheet()">↻ Sync Sheet</button>
+        <button class="sync-btn" onclick="syncData()">↻ &nbsp;Sync Sheet</button>
         <button class="live-btn" onclick="fetchNAVs()"><div class="dot"></div> LIVE NAV</button>
       </div>
     </div>
     <div class="goal-bar">
       <div class="gi"><div class="gl">Total Invested</div><div class="gv col-blue" id="hdr-inv">—</div></div>
       <div class="gi"><div class="gl">Live Value</div><div class="gv col-green" id="hdr-val">—</div></div>
-      <div class="gi"><div class="gl">Monthly SIP</div><div class="gv col-gold" id="hdr-sip">—</div></div>
+      <div class="gi"><div class="gl">Monthly SIP</div><div class="gv col-gold">₹70,000/mo</div></div>
       <div class="gi"><div class="gl">Months to Goal</div><div class="gv col-green" id="months-left">—</div></div>
-      <div class="gi"><div class="gl">Sheet Synced</div><div class="gv col-muted" id="sync-time">—</div></div>
+      <div class="gi"><div class="gl">Last Synced</div><div class="gv col-muted" id="sync-time">—</div></div>
     </div>
   </div>
 
-  <!-- Setup panel -->
+  <!-- Setup panel — shown only first time -->
   <div id="setup">
-    <h3>🔗 Connect Your Google Sheet</h3>
-    <p>Paste your broker's CSV export into Google Sheets, publish it as CSV, and paste the URL below.<br>
-    Your URL and settings are saved in your browser — you only do this once.</p>
+    <h3>🔗 One-Time Setup — Paste Your Apps Script URL</h3>
+    <p>
+      You only do this once. After setup, your dashboard syncs automatically every time you update your Google Sheet.<br>
+      Follow the steps at the bottom of this page to get your Apps Script URL.
+    </p>
     <div class="input-row">
-      <label>Google Sheet CSV URL</label>
-      <input type="text" id="sheet-url" placeholder="https://docs.google.com/spreadsheets/d/…/pub?output=csv">
-    </div>
-    <div class="hint">
-      How to get URL: Google Sheets → <code>File</code> → <code>Share</code> → <code>Publish to web</code> → select your sheet → <code>Web page</code> → <code>Publish</code> → copy the link<br>
-    URL should look like: <code>https://docs.google.com/spreadsheets/d/e/XXXX/pubhtml?gid=0&amp;single=true</code>
+      <label>Apps Script URL</label>
+      <input type="text" id="api-url-input" placeholder="https://script.google.com/macros/s/XXXX/exec">
     </div>
     <div class="input-row">
-      <label>Goal Target Amount (₹)</label>
-      <input type="number" id="goal-inp" value="2000000">
+      <label>Goal Amount (₹)</label>
+      <input type="number" id="goal-input" value="2000000">
     </div>
-    <div class="input-row">
-      <label>Total Monthly SIP (₹)</label>
-      <input type="number" id="sip-inp" value="70000">
-    </div>
-    <button class="connect-btn" onclick="saveAndConnect()">🔌 &nbsp;Connect &amp; Load Dashboard</button>
+    <button class="connect-btn" onclick="saveAndConnect()">🔌 &nbsp;Connect Dashboard</button>
   </div>
 
   <!-- KPI Cards -->
   <div class="cards">
     <div class="card"><div class="cl">Total Invested</div><div class="cv b" id="kpi-inv">—</div><div class="cs" id="kpi-sub">—</div></div>
-    <div class="card"><div class="cl">Live Value</div><div class="cv g" id="kpi-val">—</div><div class="cs">From live NAV × units</div></div>
+    <div class="card"><div class="cl">Live Value</div><div class="cv g" id="kpi-val">—</div><div class="cs">Units × Live NAV</div></div>
     <div class="card"><div class="cl">Total Gain / Loss</div><div class="cv" id="kpi-gain">—</div><div class="cs" id="kpi-pct">—</div></div>
-    <div class="card"><div class="cl">Avg XIRR</div><div class="cv go" id="kpi-xirr">—</div><div class="cs">From your broker CSV</div></div>
+    <div class="card"><div class="cl">Avg XIRR</div><div class="cv go" id="kpi-xirr">—</div><div class="cs">From your broker</div></div>
   </div>
 
-  <div class="sec">Holdings — folios auto-merged from sheet</div>
+  <div class="sec">Your Holdings — folios auto-merged</div>
   <div id="funds-wrap"></div>
 
-  <div class="status" id="status">Waiting for portfolio data…</div>
+  <div class="status" id="status">Connecting…</div>
   <button class="refresh-btn" onclick="fetchNAVs()">⟳ &nbsp;Refresh Live NAV</button>
 
   <div class="sec">Dec 2027 Projection</div>
@@ -246,38 +244,48 @@
     </div>
   </div>
 
-  <div class="sec">Monthly Workflow — How to Update</div>
+  <!-- Setup Guide -->
+  <div class="sec">One-Time Setup Guide — 5 Minutes</div>
   <div class="guide-box">
-    <h3>📋 Every Month After SIP — 3 Simple Steps</h3>
+    <h3>🚀 Connect Google Sheets via Apps Script</h3>
     <div class="step">
       <div class="num">1</div>
-      <div class="txt"><strong>Export CSV from Kuvera:</strong> Portfolio → Holdings → Download / Export → save as CSV</div>
+      <div class="txt">Open your Google Sheet → click <strong>Extensions</strong> → <strong>Apps Script</strong></div>
     </div>
     <div class="step">
       <div class="num">2</div>
-      <div class="txt"><strong>Paste into Google Sheet:</strong> Open your sheet → select all old data → delete → paste new CSV data</div>
+      <div class="txt">Delete everything in the editor → paste the <code>apps_script.gs</code> file content → press <strong>Ctrl+S</strong> to save</div>
     </div>
     <div class="step">
       <div class="num">3</div>
-      <div class="txt"><strong>Come back here → click ↻ Sync Sheet</strong> — dashboard instantly reflects new invested amounts, units, and XIRR from your broker</div>
+      <div class="txt">Click <strong>Deploy</strong> → <strong>New Deployment</strong> → click ⚙ gear icon → select <strong>Web app</strong></div>
     </div>
     <div class="step">
-      <div class="num">✓</div>
+      <div class="num">4</div>
+      <div class="txt">Set: <code>Execute as: Me</code> · <code>Who has access: Anyone</code> → click <strong>Deploy</strong> → click <strong>Authorize access</strong> → allow permissions</div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="txt">Copy the <strong>Web app URL</strong> → paste it in the setup box at the top of this page → click <strong>Connect Dashboard</strong></div>
+    </div>
+    <div class="step">
+      <div class="num">♻</div>
       <div class="txt" style="color:var(--accent)">
-        Live NAV is fetched automatically every time you open the dashboard. Sheet sync is only needed after each new SIP on the 6th.
+        <strong>Every month after SIP:</strong> Export CSV from Kuvera → paste into Google Sheet → click <strong>↻ Sync Sheet</strong> on this dashboard. That's it — fully automatic! 🎯
       </div>
     </div>
   </div>
 
   <div class="api-note">
-    Portfolio data: Google Sheets (published CSV) · Live NAV: <a href="https://mfapi.in" target="_blank">mfapi.in</a> · AMFI India · No API key needed
+    Portfolio data: Google Apps Script API (your sheet) · Live NAV: <a href="https://mfapi.in" target="_blank">mfapi.in</a> · AMFI India · No third-party proxies
   </div>
 </div>
 
 <script>
-const GOAL_DATE = new Date(2027,11,6);
+// ── Config ──────────────────────────────────────────────────
+const GOAL_DATE = new Date(2027, 11, 6);
+const SIP       = 70000;
 
-// Fund metadata — maps fund name → mfapi scheme code + display info
 const FUND_META = [
   { key:'kotak arbitrage',              short:'KA', code:'119551', cs:'#1a56db', ce:'#3d8bff' },
   { key:'icici prudential multi asset', short:'MA', code:'18485',  cs:'#f59e0b', ce:'#fbbf24' },
@@ -285,9 +293,8 @@ const FUND_META = [
 ];
 
 let FUNDS = [], liveCorpus = 0;
-
 const inr  = v => '₹' + Math.round(v).toLocaleString('en-IN');
-const inrL = v => v >= 1e5 ? '₹'+(v/1e5).toFixed(2)+' L' : inr(v);
+const inrL = v => v >= 1e5 ? '₹' + (v/1e5).toFixed(2) + ' L' : inr(v);
 const mo   = (a,b) => (b.getFullYear()-a.getFullYear())*12+(b.getMonth()-a.getMonth());
 
 function matchMeta(name) {
@@ -295,185 +302,68 @@ function matchMeta(name) {
   return FUND_META.find(m => n.includes(m.key)) || {short:name.slice(0,2).toUpperCase(), code:null, cs:'#6b7385', ce:'#9ca3af'};
 }
 
-// ── Setup ──────────────────────────────────────────────────
+// ── Setup ───────────────────────────────────────────────────
 function showSetup() {
   document.getElementById('setup').style.display = 'block';
   document.getElementById('loader').classList.add('hide');
 }
 
 function saveAndConnect() {
-  const url  = document.getElementById('sheet-url').value.trim();
-  const goal = document.getElementById('goal-inp').value;
-  const sip  = document.getElementById('sip-inp').value;
-  if (!url) { alert('Please paste your Google Sheets CSV URL'); return; }
-  localStorage.setItem('mf_url',  url);
-  localStorage.setItem('mf_goal', goal);
-  localStorage.setItem('mf_sip',  sip);
-  document.getElementById('setup').style.display = 'none';
-  loadSheet(url);
-}
-
-function reloadSheet() {
-  const url = localStorage.getItem('mf_url');
-  if (!url) { showSetup(); return; }
-  loadSheet(url);
-}
-
-// ── Load CSV from Google Sheets ────────────────────────────
-// Fetch Google Sheets pubhtml page and parse its HTML table
-async function loadSheet(url) {
-  document.getElementById('loader-msg').textContent = 'Syncing from Google Sheets…';
-  document.getElementById('loader').classList.remove('hide');
-  document.getElementById('loader').style.opacity = '1';
-  document.getElementById('loader').style.pointerEvents = 'all';
-
-  // Try allorigins first (fastest), then corsproxy fallback
-  const proxies = [
-    `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-    `https://corsproxy.io/?${encodeURIComponent(url)}`,
-  ];
-
-  let htmlText = null;
-  for (const proxyUrl of proxies) {
-    try {
-      const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(10000) });
-      if (res.ok) { htmlText = await res.text(); break; }
-    } catch {}
-  }
-
-  if (!htmlText) {
-    document.getElementById('loader').classList.add('hide');
-    setStatus('err', '⚠ Could not load Google Sheet. Check your internet connection.');
-    showSetup();
+  const url  = document.getElementById('api-url-input').value.trim();
+  const goal = document.getElementById('goal-input').value || '2000000';
+  if (!url || !url.includes('script.google.com')) {
+    alert('Please paste a valid Google Apps Script URL\n(should start with https://script.google.com)');
     return;
   }
-
-  // Parse HTML table from Google Sheets pubhtml page
-  parseHTML(htmlText);
+  localStorage.setItem('mf_api_url', url);
+  localStorage.setItem('mf_goal',    goal);
+  document.getElementById('setup').style.display = 'none';
+  syncData();
 }
 
-// Parse Google Sheets HTML table into fund data
-function parseHTML(htmlText) {
+// ── Fetch from Apps Script API ──────────────────────────────
+async function syncData() {
+  const url = localStorage.getItem('mf_api_url');
+  if (!url) { showSetup(); return; }
+
+  document.getElementById('loader-msg').textContent = 'Syncing from Google Sheets…';
+  document.getElementById('loader').classList.remove('hide');
+  document.getElementById('loader').style.opacity  = '1';
+  document.getElementById('loader').style.pointerEvents = 'all';
+
   try {
-    const parser = new DOMParser();
-    const doc    = parser.parseFromString(htmlText, 'text/html');
-    const rows   = Array.from(doc.querySelectorAll('table tr'));
+    // Apps Script URL works directly — no proxy needed!
+    const res  = await fetch(url, { signal: AbortSignal.timeout(15000) });
+    const data = await res.json();
 
-    if (rows.length < 2) throw new Error('No table found');
+    if (data.error) throw new Error(data.error);
+    if (!data.funds || data.funds.length === 0) throw new Error('No fund data returned');
 
-    // Get headers from first row
-    const headers = Array.from(rows[0].querySelectorAll('td, th'))
-                        .map(td => td.textContent.trim().toLowerCase().replace(/ /g,'_'));
-
-    const col = Object.fromEntries(headers.map((h,i) => [h,i]));
-    const get = (cells, k) => (cells[col[k]] ? cells[col[k]].textContent.trim() : '');
-    const num = (cells, k) => parseFloat(get(cells,k)) || 0;
-
-    // Merge rows by scheme name
-    const map = {};
-    for (let i = 1; i < rows.length; i++) {
-      const cells = Array.from(rows[i].querySelectorAll('td, th'));
-      if (cells.length < 4) continue;
-      const name = get(cells,'scheme_name'); if (!name) continue;
-      const inv  = num(cells,'invested');    if (inv === 0) continue;
-
-      if (!map[name]) map[name] = {name, category:get(cells,'category'), folios:[], invested:0, curVal:0, units:0, xirrList:[], nav:0};
-      const f = map[name];
-      f.invested += inv;
-      f.curVal   += num(cells,'current_value');
-      f.units    += num(cells,'units');
-      f.xirrList.push(num(cells,'xirr'));
-      f.nav       = num(cells,'nav');
-      f.folios.push({
-        folio:   get(cells,'folio_number'),
-        invested: inv,
-        curVal:  num(cells,'current_value'),
-        units:   num(cells,'units'),
-        avgNav:  num(cells,'avg_nav'),
-        xirr:    num(cells,'xirr'),
-      });
-    }
-
-    FUNDS = Object.values(map).map(f => ({
-      ...f,
-      ...matchMeta(f.name),
-      avgNav:  f.invested / f.units,
-      avgXirr: f.xirrList.reduce((s,x)=>s+x,0) / f.xirrList.length,
-    }));
-
-    if (FUNDS.length === 0) throw new Error('No fund data found in table');
+    // Attach display meta to each fund
+    FUNDS = data.funds.map(f => ({ ...f, ...matchMeta(f.name) }));
 
     document.getElementById('sync-time').textContent = new Date().toLocaleTimeString('en-IN');
     render();
     fetchNAVs();
+
   } catch(e) {
     document.getElementById('loader').classList.add('hide');
-    setStatus('err', '⚠ Could not read data from Google Sheet. Make sure row 1 has correct column headers.');
-    console.error(e);
+    setStatus('err', '⚠ Could not sync: ' + e.message + ' · Check your Apps Script URL or re-deploy.');
+    showSetup();
   }
 }
 
-// ── Parse & Merge CSV ──────────────────────────────────────
-function parseCSV(text) {
-  const lines = text.trim().split('\n').filter(l => l.trim());
-  if (lines.length < 2) { setStatus('err','⚠ Sheet appears empty'); document.getElementById('loader').classList.add('hide'); return; }
-
-  // Build column index map from header row
-  const hdrs = lines[0].split(',').map(h => h.replace(/"/g,'').trim().toLowerCase().replace(/ /g,'_'));
-  const col  = Object.fromEntries(hdrs.map((h,i) => [h,i]));
-  const get  = (row,k) => (row[col[k]]||'').replace(/"/g,'').trim();
-  const num  = (row,k) => parseFloat(get(row,k)) || 0;
-
-  // Merge rows by scheme name
-  const map = {};
-  for (let i = 1; i < lines.length; i++) {
-    const row = lines[i].split(',');
-    if (row.length < 4) continue;
-    const name = get(row,'scheme_name'); if (!name) continue;
-    const inv  = num(row,'invested');    if (inv === 0) continue;
-
-    if (!map[name]) map[name] = {name, category:get(row,'category'), folios:[], invested:0, curVal:0, units:0, xirrList:[], nav:0};
-    const f = map[name];
-    f.invested += inv;
-    f.curVal   += num(row,'current_value');
-    f.units    += num(row,'units');
-    f.xirrList.push(num(row,'xirr'));
-    f.nav       = num(row,'nav');
-    f.folios.push({
-      folio:   get(row,'folio_number'),
-      invested:inv,
-      curVal:  num(row,'current_value'),
-      units:   num(row,'units'),
-      avgNav:  num(row,'avg_nav'),
-      xirr:    num(row,'xirr'),
-    });
-  }
-
-  FUNDS = Object.values(map).map(f => ({
-    ...f,
-    ...matchMeta(f.name),
-    avgNav:   f.invested / f.units,
-    avgXirr:  f.xirrList.reduce((s,x)=>s+x,0) / f.xirrList.length,
-  }));
-
-  document.getElementById('sync-time').textContent = new Date().toLocaleTimeString('en-IN');
-  render();
-  fetchNAVs();
-}
-
-// ── Render ─────────────────────────────────────────────────
+// ── Render dashboard ────────────────────────────────────────
 function render() {
-  const totalInv  = FUNDS.reduce((s,f)=>s+f.invested,0);
-  const totalVal  = FUNDS.reduce((s,f)=>s+f.curVal,0);
+  const totalInv  = FUNDS.reduce((s,f) => s+f.invested, 0);
+  const totalVal  = FUNDS.reduce((s,f) => s+f.cur_val,  0);
   const totalGain = totalVal - totalInv;
   const gpct      = totalGain / totalInv * 100;
-  const avgXirr   = FUNDS.reduce((s,f)=>s+f.avgXirr,0) / FUNDS.length;
-  const sip       = parseInt(localStorage.getItem('mf_sip') || 70000);
+  const avgXirr   = FUNDS.reduce((s,f) => s+f.avg_xirr, 0) / FUNDS.length;
   const months    = mo(new Date(), GOAL_DATE);
 
   document.getElementById('hdr-inv').textContent     = inr(totalInv);
   document.getElementById('hdr-val').textContent     = inr(totalVal);
-  document.getElementById('hdr-sip').textContent     = inr(sip) + '/mo';
   document.getElementById('months-left').textContent = months + ' months';
   document.getElementById('kpi-inv').textContent     = inr(totalInv);
   document.getElementById('kpi-sub').textContent     = FUNDS.length + ' funds · ' + FUNDS.reduce((s,f)=>s+f.folios.length,0) + ' folios';
@@ -488,14 +378,14 @@ function render() {
   wrap.innerHTML = '';
   FUNDS.forEach((f,i) => {
     const pct   = (f.invested/totalInv*100).toFixed(1);
-    const gain  = f.curVal - f.invested;
+    const gain  = f.cur_val - f.invested;
     const gpct2 = (gain/f.invested*100).toFixed(2);
     const folioHTML = f.folios.map(fl=>`
       <div class="folio-row">
         <div class="fi">Folio <span>${fl.folio}</span></div>
         <div class="fi">Invested <span>${inr(fl.invested)}</span></div>
         <div class="fi">Units <span>${fl.units.toFixed(4)}</span></div>
-        <div class="fi">Avg NAV <span>₹${fl.avgNav.toFixed(4)}</span></div>
+        <div class="fi">Avg NAV <span>₹${fl.avg_nav.toFixed(4)}</span></div>
         <div class="fi">XIRR <span class="${fl.xirr>=0?'g':'r'}">${fl.xirr.toFixed(2)}%</span></div>
       </div>`).join('');
     const d = document.createElement('div');
@@ -516,11 +406,11 @@ function render() {
       <div class="fnums">
         <div class="ni"><div class="nl">Invested</div><div class="nv">${inr(f.invested)}</div></div>
         <div class="ni"><div class="nl">Total Units</div><div class="nv">${f.units.toFixed(4)}</div></div>
-        <div class="ni"><div class="nl">Avg Buy NAV</div><div class="nv">₹${f.avgNav.toFixed(4)}</div></div>
-        <div class="ni"><div class="nl">Sheet Value</div><div class="nv">${inr(f.curVal)}</div></div>
-        <div class="ni"><div class="nl">Live Value</div><div class="nv" id="lv${i}">…</div></div>
+        <div class="ni"><div class="nl">Avg Buy NAV</div><div class="nv">₹${f.avg_nav.toFixed(4)}</div></div>
+        <div class="ni"><div class="nl">Sheet Value</div><div class="nv">${inr(f.cur_val)}</div></div>
+        <div class="ni"><div class="nl">Live Value</div><div class="nv" id="lv${i}">Calculating…</div></div>
         <div class="ni"><div class="nl">Gain/Loss</div><div class="nv ${gain>=0?'g':'r'}">${gain>=0?'+':'−'}${inr(Math.abs(gain))} (${gpct2}%)</div></div>
-        <div class="ni"><div class="nl">XIRR</div><div class="nv ${f.avgXirr>=0?'go':'r'}">${f.avgXirr.toFixed(2)}%</div></div>
+        <div class="ni"><div class="nl">XIRR</div><div class="nv ${f.avg_xirr>=0?'go':'r'}">${f.avg_xirr.toFixed(2)}%</div></div>
         <div class="ni"><div class="nl">Portfolio</div><div class="nv">${pct}%</div></div>
       </div>
       <div class="folio-list">
@@ -533,41 +423,46 @@ function render() {
 
   liveCorpus = totalVal;
   calcProj();
-  document.getElementById('setup').style.display = 'none';
   document.getElementById('loader').classList.add('hide');
 }
 
-// ── Live NAV ───────────────────────────────────────────────
-const PROXIES = [u=>u, u=>`https://corsproxy.io/?${encodeURIComponent(u)}`];
+// ── Live NAV ────────────────────────────────────────────────
 async function tryFetch(url) {
-  for (const p of PROXIES) {
-    try { const r = await fetch(p(url),{signal:AbortSignal.timeout(8000)}); if(r.ok) return r.json(); } catch{}
-  }
+  try {
+    const r = await fetch(url, {signal: AbortSignal.timeout(6000)});
+    if (r.ok) return r.json();
+  } catch {}
+  try {
+    const r = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, {signal: AbortSignal.timeout(6000)});
+    if (r.ok) return r.json();
+  } catch {}
   return null;
 }
 
 async function fetchOne(i) {
   const f=FUNDS[i], nb=document.getElementById(`nb${i}`), lv=document.getElementById(`lv${i}`);
-  nb.className='nav-badge loading';
-  if (!f.code) { nb.className='nav-badge error'; nb.textContent='Code not mapped'; lv.textContent=inr(f.curVal); return {val:f.curVal,ok:false}; }
+  nb.className = 'nav-badge loading';
+  if (!f.code) { nb.className='nav-badge error'; nb.textContent='Code not mapped'; lv.textContent=inr(f.cur_val); return {val:f.cur_val,ok:false}; }
   const data = await tryFetch(`https://api.mfapi.in/mf/${f.code}/latest`);
   if (data?.status==='SUCCESS' && data.data?.[0]) {
     const nav=parseFloat(data.data[0].nav), val=f.units*nav;
-    nb.className='nav-badge'; nb.textContent=`NAV ₹${nav.toFixed(4)} · ${data.data[0].date}`;
-    lv.textContent=inr(val); return {val,ok:true};
+    nb.className='nav-badge';
+    nb.textContent=`NAV ₹${nav.toFixed(4)} · ${data.data[0].date}`;
+    lv.textContent=inr(val);
+    return {val, ok:true};
   }
-  nb.className='nav-badge error'; nb.textContent='NAV unavailable'; lv.textContent=inr(f.curVal);
-  return {val:f.curVal,ok:false};
+  nb.className='nav-badge error'; nb.textContent='NAV unavailable'; lv.textContent=inr(f.cur_val);
+  return {val:f.cur_val, ok:false};
 }
 
 async function fetchNAVs() {
   if (!FUNDS.length) return;
-  setStatus('','Fetching live NAV from mfapi.in…');
-  const results  = await Promise.all(FUNDS.map((_,i)=>fetchOne(i)));
+  setStatus('', 'Fetching live NAV from mfapi.in…');
+  const results  = await Promise.all(FUNDS.map((_,i) => fetchOne(i)));
   const ok       = results.filter(r=>r.ok).length;
-  const totalVal = results.reduce((s,r)=>s+r.val,0);
-  const totalInv = FUNDS.reduce((s,f)=>s+f.invested,0);
-  const gain     = totalVal-totalInv, gpct=(gain/totalInv*100);
+  const totalVal = results.reduce((s,r)=>s+r.val, 0);
+  const totalInv = FUNDS.reduce((s,f)=>s+f.invested, 0);
+  const gain=totalVal-totalInv, gpct=(gain/totalInv*100);
 
   document.getElementById('kpi-val').textContent  = inr(totalVal);
   document.getElementById('hdr-val').textContent  = inr(totalVal);
@@ -577,29 +472,28 @@ async function fetchNAVs() {
   document.getElementById('kpi-pct').className    = 'cs '+(gpct>=0?'g':'r');
   liveCorpus = totalVal; calcProj();
 
-  if (ok===FUNDS.length) setStatus('ok',`✓ All ${ok} NAVs updated · ${new Date().toLocaleTimeString('en-IN')}`);
-  else if (ok>0) setStatus('info',`⚠ ${ok}/${FUNDS.length} NAVs loaded`);
-  else setStatus('err','⚠ NAV fetch failed · check network or open via GitHub Pages');
+  if (ok===FUNDS.length) setStatus('ok', `✓ All ${ok} NAVs updated · ${new Date().toLocaleTimeString('en-IN')}`);
+  else if (ok>0) setStatus('info', `⚠ ${ok}/${FUNDS.length} NAVs loaded`);
+  else setStatus('err', '⚠ NAV fetch failed · check network');
 }
 
-// ── Projection ─────────────────────────────────────────────
+// ── Projection ──────────────────────────────────────────────
 function calcProj() {
   const rate=parseFloat(document.getElementById('rate').value);
-  document.getElementById('rate-val').textContent=rate+'%';
+  document.getElementById('rate-val').textContent = rate+'%';
   const r=rate/100/12, n=mo(new Date(),GOAL_DATE);
   const c=liveCorpus||FUNDS.reduce((s,f)=>s+f.invested,0);
-  const sip=parseInt(localStorage.getItem('mf_sip')||70000);
   const GOAL=parseInt(localStorage.getItem('mf_goal')||2000000);
-  const fvC=c*Math.pow(1+r,n), fvS=sip*((Math.pow(1+r,n)-1)/r)*(1+r);
-  const tot=fvC+fvS, grow=tot-c-sip*n, pct=Math.min(tot/GOAL*100,100);
-  document.getElementById('p-corpus').textContent=inrL(c);
-  document.getElementById('p-sip').textContent=inrL(sip*n);
-  document.getElementById('p-growth').textContent=inrL(grow);
-  document.getElementById('p-total').textContent=inrL(tot);
-  document.getElementById('prog-l').textContent='Now: '+inrL(c);
-  document.getElementById('prog-r').textContent='Target: '+inrL(GOAL);
-  document.getElementById('prog').style.width=pct+'%';
-  document.getElementById('prog-pct').textContent=pct.toFixed(1)+'% of '+inrL(GOAL)+' goal';
+  const fvC=c*Math.pow(1+r,n), fvS=SIP*((Math.pow(1+r,n)-1)/r)*(1+r);
+  const tot=fvC+fvS, grow=tot-c-SIP*n, pct=Math.min(tot/GOAL*100,100);
+  document.getElementById('p-corpus').textContent = inrL(c);
+  document.getElementById('p-sip').textContent    = inrL(SIP*n);
+  document.getElementById('p-growth').textContent = inrL(grow);
+  document.getElementById('p-total').textContent  = inrL(tot);
+  document.getElementById('prog-l').textContent   = 'Now: '+inrL(c);
+  document.getElementById('prog-r').textContent   = 'Target: '+inrL(GOAL);
+  document.getElementById('prog').style.width     = pct+'%';
+  document.getElementById('prog-pct').textContent = pct.toFixed(1)+'% of '+inrL(GOAL)+' goal';
 }
 
 function setStatus(cls, msg) {
@@ -609,14 +503,9 @@ function setStatus(cls, msg) {
 
 document.getElementById('rate').addEventListener('input', calcProj);
 
-// ── Boot ───────────────────────────────────────────────────
-const DEFAULT_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhPah5kwJgipbUkqondrV9iO86Xu2UPVCbklHmOg-wgCVxxBWo4ZFGC-X1hJVG1GzkJdTfdJT5Fyaf/pubhtml?gid=856238419&single=true';
-if (!localStorage.getItem('mf_url')) {
-  localStorage.setItem('mf_url',  DEFAULT_URL);
-  localStorage.setItem('mf_goal', '2000000');
-  localStorage.setItem('mf_sip',  '70000');
-}
-loadSheet(localStorage.getItem('mf_url'));
+// ── Boot ────────────────────────────────────────────────────
+const savedUrl = localStorage.getItem('mf_api_url');
+if (savedUrl) syncData(); else showSetup();
 </script>
 </body>
 </html>
