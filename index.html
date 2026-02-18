@@ -159,58 +159,10 @@
     padding:14px 18px;font-size:0.73rem;color:var(--muted);text-align:center;margin-bottom:24px}
   .api-note a{color:var(--accent2);text-decoration:none}
 
-
-  /* ── Ticker Bar ─────────────────────────────────────────── */
-  #ticker-bar{
-    position:fixed;top:0;left:0;right:0;z-index:1000;
-    background:#0a0c10;border-bottom:1px solid var(--border);
-    height:36px;overflow:hidden;display:flex;align-items:center;
-  }
-  #ticker-bar::before{
-    content:'MARKETS';position:absolute;left:0;top:0;bottom:0;
-    background:#111420;border-right:1px solid var(--border);
-    color:var(--muted);font-family:'DM Mono',monospace;font-size:0.6rem;
-    letter-spacing:0.1em;display:flex;align-items:center;padding:0 12px;z-index:2;
-    width:72px;display:flex;align-items:center;justify-content:center;
-  }
-  #ticker-track{
-    display:flex;gap:0;white-space:nowrap;
-    animation:ticker-scroll 60s linear infinite;
-    margin-left:72px;
-  }
-  #ticker-track:hover{animation-play-state:paused}
-  @keyframes ticker-scroll{
-    0%{transform:translateX(0)}
-    100%{transform:translateX(-50%)}
-  }
-  .tick-item{
-    display:inline-flex;align-items:center;gap:8px;
-    padding:0 18px;border-right:1px solid var(--border);height:36px;
-    font-family:'DM Mono',monospace;font-size:0.72rem;cursor:default;
-    transition:background 0.2s;
-  }
-  .tick-item:hover{background:rgba(255,255,255,0.03)}
-  .tick-name{color:var(--muted);font-size:0.65rem;letter-spacing:0.04em}
-  .tick-val{color:var(--text);font-weight:500}
-  .tick-chg{font-size:0.65rem}
-  .tick-chg.up{color:var(--accent)}
-  .tick-chg.dn{color:var(--warn)}
-  .tick-meta{font-size:0.6rem;color:var(--muted);border-left:1px solid var(--border);padding-left:8px;margin-left:2px;letter-spacing:0.02em}
-  .tick-sep{color:var(--border);margin:0 2px}
-  .tick-loading{color:var(--muted);font-size:0.65rem;animation:blink 1s infinite}
-  /* Push page content down so ticker doesn't overlap */
-  body{padding-top:36px}
   @media(max-width:520px){.hdr h1{font-size:1.5rem}.fnums{gap:12px}.nav-badge{min-width:unset}}
 </style>
 </head>
 <body>
-
-<!-- Live Market Ticker -->
-<div id="ticker-bar">
-  <div id="ticker-track">
-    <span class="tick-loading">Loading market data…</span>
-  </div>
-</div>
 
 <div id="loader">
   <div class="spinner"></div>
@@ -335,9 +287,9 @@ const GOAL_DATE = new Date(2027, 11, 6);
 const SIP       = 70000;
 
 const FUND_META = [
-  { key:'kotak arbitrage',              short:'KA', code:'119551', cs:'#1a56db', ce:'#3d8bff' },
-  { key:'icici prudential multi asset', short:'MA', code:'18485',  cs:'#f59e0b', ce:'#fbbf24' },
-  { key:'icici prudential equity sav',  short:'ES', code:'31233',  cs:'#0e9f6e', ce:'#34d399' },
+  { key:'kotak arbitrage',              short:'KA', code:'119771', cs:'#1a56db', ce:'#3d8bff' },
+  { key:'icici prudential multi asset', short:'MA', code:'120334',  cs:'#f59e0b', ce:'#fbbf24' },
+  { key:'icici prudential equity sav',  short:'ES', code:'133054',  cs:'#0e9f6e', ce:'#34d399' },
 ];
 
 let FUNDS = [], liveCorpus = 0;
@@ -553,113 +505,6 @@ function setStatus(cls, msg) {
 }
 
 document.getElementById('rate').addEventListener('input', calcProj);
-
-
-// ── Live Market Ticker ──────────────────────────────────────
-const TICKER_SYMBOLS = [
-  { sym:'^NSEI',       label:'NIFTY 50'       },
-  { sym:'^BSESN',      label:'SENSEX'         },
-  { sym:'^NSEBANK',    label:'NIFTY BANK'     },
-  { sym:'^CNXIT',      label:'NIFTY IT'       },
-  { sym:'^NSEMDCP100', label:'MIDCAP 100'     },
-  { sym:'^CNXSC',      label:'SMALLCAP'       },
-  { sym:'^NSMIDCP',    label:'NIFTY NEXT 50'  },
-  { sym:'GC=F',        label:'GOLD'           },
-  { sym:'SI=F',        label:'SILVER'         },
-];
-
-async function fetchTicker() {
-  const apiUrl = localStorage.getItem('mf_api_url');
-  if (!apiUrl) { renderTickerFallback(); return; }
-
-  // Use Apps Script — runs server-side, no CORS, no blocking!
-  try {
-    const res  = await fetch(apiUrl + '?action=ticker');
-    const data = await res.json();
-    if (data.error) throw new Error(data.error);
-    if (!data.ticker || data.ticker.length === 0) throw new Error('No ticker data');
-
-    // Map symbol → data for renderTicker
-    const quotes = data.ticker.map(t => ({
-      symbol:                        t.symbol,
-      regularMarketPrice:            t.price,
-      regularMarketChange:           t.change,
-      regularMarketChangePercent:    t.change_pct,
-      regularMarketDayHigh:          t.high,
-      regularMarketDayLow:           t.low,
-      regularMarketPreviousClose:    t.prev_close,
-    }));
-    renderTicker(quotes);
-  } catch(e) {
-    renderTickerFallback();
-    console.warn('Ticker fetch failed:', e.message);
-  }
-}
-
-function renderTickerFallback() {
-  // Show indices with dashes — better than blank ticker
-  const track = document.getElementById('ticker-track');
-  if (track.querySelector('.tick-item')) return; // already has real data
-  let items = '';
-  TICKER_SYMBOLS.forEach(s => {
-    items += `<div class="tick-item">
-      <span class="tick-name">${s.label}</span>
-      <span class="tick-val" style="color:var(--muted)">—</span>
-      <span class="tick-chg" style="color:var(--muted)">market closed</span>
-    </div>`;
-  });
-  track.innerHTML = items + items;
-}
-
-function renderTicker(quotes) {
-  const map = {};
-  quotes.forEach(q => map[q.symbol] = q);
-
-  // Build items (duplicated for seamless loop)
-  let items = '';
-  const buildItem = (s) => {
-    const q    = map[s.sym];
-    if (!q) return '';
-    const price = q.regularMarketPrice;
-    const chg   = q.regularMarketChange;
-    const pct   = q.regularMarketChangePercent;
-    const isUp  = chg >= 0;
-    const arrow = isUp ? '▲' : '▼';
-    const cls   = isUp ? 'up' : 'dn';
-
-    const isComm = ['GC=F','SI=F'].includes(s.sym);
-    const fmt = v => isComm
-      ? '$' + v.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})
-      : v.toLocaleString('en-IN', {maximumFractionDigits:0});
-
-    const high  = q.regularMarketDayHigh;
-    const low   = q.regularMarketDayLow;
-    const prev  = q.regularMarketPreviousClose;
-
-    return `<div class="tick-item">
-      <span class="tick-name">${s.label}</span>
-      <span class="tick-val">${fmt(price)}</span>
-      <span class="tick-chg ${cls}">${arrow} ${Math.abs(pct).toFixed(2)}%</span>
-      <span class="tick-meta">H: ${fmt(high)} &nbsp;L: ${fmt(low)} &nbsp;PC: ${fmt(prev)}</span>
-    </div>`;
-  };
-
-  TICKER_SYMBOLS.forEach(s => { items += buildItem(s); });
-  // Duplicate for seamless infinite scroll
-  const doubled = items + items;
-
-  const track = document.getElementById('ticker-track');
-  track.innerHTML = doubled;
-
-  // Adjust animation speed based on content width
-  const totalWidth = track.scrollWidth / 2;
-  const speed = Math.max(40, totalWidth / 120); // ~120px per second
-  track.style.animationDuration = speed + 's';
-}
-
-// Start ticker + refresh every 10 seconds
-fetchTicker();
-setInterval(fetchTicker, 10000);
 
 // ── Boot ────────────────────────────────────────────────────
 const savedUrl = localStorage.getItem('mf_api_url');
