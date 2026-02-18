@@ -197,7 +197,8 @@
       <input type="text" id="sheet-url" placeholder="https://docs.google.com/spreadsheets/d/…/pub?output=csv">
     </div>
     <div class="hint">
-      How to get URL: Google Sheets → <code>File</code> → <code>Share</code> → <code>Publish to web</code> → Sheet 1 → <code>CSV</code> → <code>Publish</code> → copy link
+      How to get URL: Google Sheets → <code>File</code> → <code>Share</code> → <code>Publish to web</code> → select your sheet → <code>Web page</code> → <code>Publish</code> → copy the link<br>
+    URL should look like: <code>https://docs.google.com/spreadsheets/d/e/XXXX/pubhtml?gid=0&amp;single=true</code>
     </div>
     <div class="input-row">
       <label>Goal Target Amount (₹)</label>
@@ -319,21 +320,96 @@ function reloadSheet() {
 }
 
 // ── Load CSV from Google Sheets ────────────────────────────
+// Fetch Google Sheets pubhtml page and parse its HTML table
 async function loadSheet(url) {
   document.getElementById('loader-msg').textContent = 'Syncing from Google Sheets…';
   document.getElementById('loader').classList.remove('hide');
   document.getElementById('loader').style.opacity = '1';
   document.getElementById('loader').style.pointerEvents = 'all';
+
+  // Try allorigins first (fastest), then corsproxy fallback
+  const proxies = [
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    `https://corsproxy.io/?${encodeURIComponent(url)}`,
+  ];
+
+  let htmlText = null;
+  for (const proxyUrl of proxies) {
+    try {
+      const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(10000) });
+      if (res.ok) { htmlText = await res.text(); break; }
+    } catch {}
+  }
+
+  if (!htmlText) {
+    document.getElementById('loader').classList.add('hide');
+    setStatus('err', '⚠ Could not load Google Sheet. Check your internet connection.');
+    showSetup();
+    return;
+  }
+
+  // Parse HTML table from Google Sheets pubhtml page
+  parseHTML(htmlText);
+}
+
+// Parse Google Sheets HTML table into fund data
+function parseHTML(htmlText) {
   try {
-    // corsproxy.io needed for Google Sheets CORS
-    const proxy = `https://corsproxy.io/?${encodeURIComponent(url)}`;
-    const res   = await fetch(proxy, {signal: AbortSignal.timeout(12000)});
-    if (!res.ok) throw new Error('fetch failed');
-    parseCSV(await res.text());
+    const parser = new DOMParser();
+    const doc    = parser.parseFromString(htmlText, 'text/html');
+    const rows   = Array.from(doc.querySelectorAll('table tr'));
+
+    if (rows.length < 2) throw new Error('No table found');
+
+    // Get headers from first row
+    const headers = Array.from(rows[0].querySelectorAll('td, th'))
+                        .map(td => td.textContent.trim().toLowerCase().replace(/ /g,'_'));
+
+    const col = Object.fromEntries(headers.map((h,i) => [h,i]));
+    const get = (cells, k) => (cells[col[k]] ? cells[col[k]].textContent.trim() : '');
+    const num = (cells, k) => parseFloat(get(cells,k)) || 0;
+
+    // Merge rows by scheme name
+    const map = {};
+    for (let i = 1; i < rows.length; i++) {
+      const cells = Array.from(rows[i].querySelectorAll('td, th'));
+      if (cells.length < 4) continue;
+      const name = get(cells,'scheme_name'); if (!name) continue;
+      const inv  = num(cells,'invested');    if (inv === 0) continue;
+
+      if (!map[name]) map[name] = {name, category:get(cells,'category'), folios:[], invested:0, curVal:0, units:0, xirrList:[], nav:0};
+      const f = map[name];
+      f.invested += inv;
+      f.curVal   += num(cells,'current_value');
+      f.units    += num(cells,'units');
+      f.xirrList.push(num(cells,'xirr'));
+      f.nav       = num(cells,'nav');
+      f.folios.push({
+        folio:   get(cells,'folio_number'),
+        invested: inv,
+        curVal:  num(cells,'current_value'),
+        units:   num(cells,'units'),
+        avgNav:  num(cells,'avg_nav'),
+        xirr:    num(cells,'xirr'),
+      });
+    }
+
+    FUNDS = Object.values(map).map(f => ({
+      ...f,
+      ...matchMeta(f.name),
+      avgNav:  f.invested / f.units,
+      avgXirr: f.xirrList.reduce((s,x)=>s+x,0) / f.xirrList.length,
+    }));
+
+    if (FUNDS.length === 0) throw new Error('No fund data found in table');
+
+    document.getElementById('sync-time').textContent = new Date().toLocaleTimeString('en-IN');
+    render();
+    fetchNAVs();
   } catch(e) {
     document.getElementById('loader').classList.add('hide');
-    setStatus('err', '⚠ Could not load Google Sheet. Check URL and ensure it is published as CSV.');
-    showSetup();
+    setStatus('err', '⚠ Could not read data from Google Sheet. Make sure row 1 has correct column headers.');
+    console.error(e);
   }
 }
 
@@ -534,8 +610,13 @@ function setStatus(cls, msg) {
 document.getElementById('rate').addEventListener('input', calcProj);
 
 // ── Boot ───────────────────────────────────────────────────
-const savedUrl = localStorage.getItem('mf_url');
-if (savedUrl) loadSheet(savedUrl); else showSetup();
+const DEFAULT_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhPah5kwJgipbUkqondrV9iO86Xu2UPVCbklHmOg-wgCVxxBWo4ZFGC-X1hJVG1GzkJdTfdJT5Fyaf/pubhtml?gid=856238419&single=true';
+if (!localStorage.getItem('mf_url')) {
+  localStorage.setItem('mf_url',  DEFAULT_URL);
+  localStorage.setItem('mf_goal', '2000000');
+  localStorage.setItem('mf_sip',  '70000');
+}
+loadSheet(localStorage.getItem('mf_url'));
 </script>
 </body>
 </html>
